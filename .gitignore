@@ -1,0 +1,8 @@
+# Ignore files without extensions
+*
+!/**/
+!*.*
+
+# Ignore other binary files
+*.out
+*.exe
