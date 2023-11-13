@@ -98,9 +98,6 @@ string getWord(int lengthOfWord) {
     return "";
 }
 
-// Dylan - This function should ask the user how many guesses they would like
-// and return that number. It needs to have input validation
-
 int getNumberOfGuesses() {
     int guesses;
     while (true) {
@@ -123,13 +120,27 @@ int getNumberOfGuesses() {
     return guesses;
 }
 
-// Dylan - This function should ask the user for the length of the word. Be sure
-// to use input validation and if the user enters an invalid number meaning if
-// they type anything other than 5, they will be prompted again
+
 int getLengthOfWord() {
-    //cout << ""
-    // For now only 5 letter words should be allowed
-    // If the user enters any length other than 5 it should not work
+    int WordLenght;
+    while (true) {
+            cout << "How long would you like the word to be? (Between 2 and 6)" << endl;
+            cin >> WordLenght;
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+
+        if (cin.fail()) {
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cout << "Invalid input, try again." << endl;
+            continue;
+        }
+        if (WordLenght < 2 || WordLenght > 6) {
+            cout << "Please enter a number between 2-6" << endl;
+            continue;
+        }
+       break;
+    }
+return WordLenght;
 }
 
 void game(int numberOfGuesses, string word) {}
