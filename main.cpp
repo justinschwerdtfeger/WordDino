@@ -20,7 +20,14 @@ int main() {
 // Justin
 void intro() {
     // TODO: improve these instructions
-    cout << "Hello and welcome to Wordle!" << endl;
+    cout << "               __" << endl;
+    cout << "              / _)" << endl;
+    cout << "     _.----._/ /" << endl;
+    cout << "    /         /" << endl;
+    cout << " __/ (  | (  |" << endl;
+    cout << "/__.-'|_|--|_|" << endl;
+
+    cout << "Hello and welcome to Word Dino!" << endl;
     cout << "Here are the rules" << endl;
     cout << "If your text turns yellow, your letter is in the word, but it is "
             "not in the right place"
