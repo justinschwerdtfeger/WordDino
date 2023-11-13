@@ -21,7 +21,6 @@ int main() {
     return 0;
 }
 
-// Justin
 void intro() {
     // TODO: improve these instructions
     cout << "               __" << endl;
@@ -41,8 +40,6 @@ void intro() {
          << endl;
     cout << "Have fun!" << endl;
 }
-
-// Luke
 // This should read the lengthOf word and read the corresponding file (there is
 // only 1 so far which is for 5 letter words)
 string getWord(int lengthOfWord) {
@@ -55,20 +52,17 @@ string getWord(int lengthOfWord) {
         cerr << "Error opening file: " << filename << endl;
         return "";
     }
-
     // Count the number of lines in the file
     int numberOfLines = 0;
     string line;
     while (getline(file, line)) {
         numberOfLines++;
     }
-
     // Check if the file is empty
     if (numberOfLines == 0) {
         cerr << "Error: File is empty." << endl;
         return "";
     }
-
     // Generate a random number between 1 and the number of lines
     srand(static_cast<unsigned int>(
         time(nullptr))); // Seed the random number generator
@@ -88,13 +82,11 @@ string getWord(int lengthOfWord) {
             break;
         }
     }
-
     // Close the file
     file.close();
 
     return targetWord;
 
-    // For now only 5 letter words should be allowe
     return "";
 }
 
@@ -120,7 +112,6 @@ int getNumberOfGuesses() {
     return guesses;
 }
 
-
 int getLengthOfWord() {
     int WordLenght;
     while (true) {
@@ -143,4 +134,24 @@ int getLengthOfWord() {
 return WordLenght;
 }
 
-void game(int numberOfGuesses, string word) {}
+void game(int numberOfGuesses, string word) {
+
+    while (true){
+        cout << "Please enter your guess"
+        cin >> word
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+
+            if (cin.fail()){
+                cin.clear();
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                cout << "Incorrect input" << endl;
+                continue;
+            }
+            break
+    }
+return word
+
+
+
+
+}
