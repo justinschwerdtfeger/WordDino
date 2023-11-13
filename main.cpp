@@ -18,7 +18,18 @@ int main() {
 }
 
 // Justin
-void intro() {}
+void intro() {
+    // TODO: improve these instructions
+    cout << "Hello and welcome to Wordle!" << endl;
+    cout << "Here are the rules" << endl;
+    cout << "If your text turns yellow, your letter is in the word, but it is "
+            "not in the right place"
+         << endl;
+    cout << "If your text turns green, your letter is in the word and in the "
+            "right place"
+         << endl;
+    cout << "Have fun!" << endl;
+}
 
 // Luke
 // This should read the lengthOf word and read the corresponding file (there is
