@@ -97,7 +97,9 @@ string getWord(int lengthOfWord) {
 
 // Dylan - This function should ask the user how many guesses they would like
 // and return that number. It needs to have input validation
+
 int getNumberOfGuesses() {}
+
 
 // Dylan - This function should ask the user for the length of the word. Be sure
 // to use input validation and if the user enters an invalid number meaning if
