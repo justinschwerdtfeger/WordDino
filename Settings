@@ -1,0 +1,18 @@
+inputfile File;
+inputfile Filenotfound;
+int main(){
+const NUMBER_OF_LINES = 2309;
+  file = newfile("words.txt")
+  Scanner scanner = new Scanner(file);
+
+  for (int i = 1; i <= lineNumber -1; i++)
+
+string answer = scanner.nextLine();
+cout << "The word is " << answer << endl;
+
+scanner.close()
+
+for (int o = 0; o < 5; o++)
+  {
+    cout << "Please enter your guess\n"
+  }
