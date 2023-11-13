@@ -6,3 +6,4 @@
 # Ignore other binary files
 *.out
 *.exe
+*.o
