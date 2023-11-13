@@ -1,6 +1,6 @@
-#include <fstream>
-#include <ctime>
 #include <cstdlib>
+#include <ctime>
+#include <fstream>
 #include <iostream>
 #include <string>
 using namespace std;
@@ -45,7 +45,8 @@ void intro() {
 // This should read the lengthOf word and read the corresponding file (there is
 // only 1 so far which is for 5 letter words)
 string getWord(int lengthOfWord) {
-// Open the file
+    // Open the file
+    string filename = "";
     ifstream file(filename);
 
     // Check if the file is opened successfully
@@ -68,7 +69,8 @@ string getWord(int lengthOfWord) {
     }
 
     // Generate a random number between 1 and the number of lines
-    srand(static_cast<unsigned int>(time(nullptr)));  // Seed the random number generator
+    srand(static_cast<unsigned int>(
+        time(nullptr))); // Seed the random number generator
     int randomLineNumber = rand() % numberOfLines + 1;
 
     // Reset the file position to the beginning
@@ -100,12 +102,12 @@ string getWord(int lengthOfWord) {
 
 int getNumberOfGuesses() {
     int guesses;
-    while (true){
+    while (true) {
         cout << "How many guesses would you like?" << endl;
         cin >> guesses;
-        cin.ignore(numeric_limits<streamsize>::max(),'\n');
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
 
-        if (cin.fail()){
+        if (cin.fail()) {
             cin.clear();
             cin.ignore(numeric_limits<streamsize>::max(), '\n');
             cout << "Invalid input, try again." << endl;
@@ -113,12 +115,11 @@ int getNumberOfGuesses() {
         }
         if (guesses != 5) {
             continue;
-            }
+        }
         break;
     }
     return guesses;
 }
-
 
 // Dylan - This function should ask the user for the length of the word. Be sure
 // to use input validation and if the user enters an invalid number meaning if
