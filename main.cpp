@@ -3,6 +3,7 @@
 #include <fstream>
 #include <iostream>
 #include <string>
+#include <limits>
 using namespace std;
 
 void intro();
@@ -113,7 +114,8 @@ int getNumberOfGuesses() {
             cout << "Invalid input, try again." << endl;
             continue;
         }
-        if (guesses != 5) {
+        if (guesses < 1 || guesses > 100) {
+            cout << "Please enter a number 1-100" << endl;
             continue;
         }
         break;
@@ -125,7 +127,7 @@ int getNumberOfGuesses() {
 // to use input validation and if the user enters an invalid number meaning if
 // they type anything other than 5, they will be prompted again
 int getLengthOfWord() {
-    cout << ""
+    //cout << ""
     // For now only 5 letter words should be allowed
     // If the user enters any length other than 5 it should not work
 }
