@@ -1,3 +1,6 @@
+#include <fstream>
+#include <ctime>
+#include <cstdlib>
 #include <iostream>
 #include <string>
 using namespace std;
@@ -42,6 +45,51 @@ void intro() {
 // This should read the lengthOf word and read the corresponding file (there is
 // only 1 so far which is for 5 letter words)
 string getWord(int lengthOfWord) {
+// Open the file
+    ifstream file(filename);
+
+    // Check if the file is opened successfully
+    if (!file.is_open()) {
+        cerr << "Error opening file: " << filename << endl;
+        return "";
+    }
+
+    // Count the number of lines in the file
+    int numberOfLines = 0;
+    string line;
+    while (getline(file, line)) {
+        numberOfLines++;
+    }
+
+    // Check if the file is empty
+    if (numberOfLines == 0) {
+        cerr << "Error: File is empty." << endl;
+        return "";
+    }
+
+    // Generate a random number between 1 and the number of lines
+    srand(static_cast<unsigned int>(time(nullptr)));  // Seed the random number generator
+    int randomLineNumber = rand() % numberOfLines + 1;
+
+    // Reset the file position to the beginning
+    file.clear();
+    file.seekg(0, ios::beg);
+
+    // Read the selected word from the file
+    int currentLineNumber = 0;
+    string targetWord;
+    while (getline(file, line)) {
+        currentLineNumber++;
+        if (currentLineNumber == randomLineNumber) {
+            targetWord = line;
+            break;
+        }
+    }
+
+    // Close the file
+    file.close();
+
+    return targetWord;
 
     // For now only 5 letter words should be allowe
     return "";
