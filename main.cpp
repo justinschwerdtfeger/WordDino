@@ -2,8 +2,8 @@
 #include <ctime>
 #include <fstream>
 #include <iostream>
-#include <string>
 #include <limits>
+#include <string>
 using namespace std;
 
 void intro();
@@ -115,9 +115,10 @@ int getNumberOfGuesses() {
 int getLengthOfWord() {
     int WordLenght;
     while (true) {
-            cout << "How long would you like the word to be? (Between 2 and 6)" << endl;
-            cin >> WordLenght;
-            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        cout << "How long would you like the word to be? (Between 2 and 6)"
+             << endl;
+        cin >> WordLenght;
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
 
         if (cin.fail()) {
             cin.clear();
@@ -129,29 +130,25 @@ int getLengthOfWord() {
             cout << "Please enter a number between 2-6" << endl;
             continue;
         }
-       break;
+        break;
     }
-return WordLenght;
+    return WordLenght;
 }
 
 void game(int numberOfGuesses, string word) {
-
-    while (true){
-        cout << "Please enter your guess"
-        cin >> word
-        cin.ignore(numeric_limits<streamsize>::max(), '\n');
-
-            if (cin.fail()){
-                cin.clear();
-                cin.ignore(numeric_limits<streamsize>::max(), '\n');
-                cout << "Incorrect input" << endl;
-                continue;
-            }
-            break
-    }
-return word
-
-
-
-
+    //
+    //     while (true){
+    //         cout << "Please enter your guess"
+    //         cin >> word
+    //         cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    //
+    //             if (cin.fail()){
+    //                 cin.clear();
+    //                 cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    //                 cout << "Incorrect input" << endl;
+    //                 continue;
+    //             }
+    //             break
+    //     }
+    // return word
 }
