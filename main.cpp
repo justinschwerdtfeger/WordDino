@@ -31,6 +31,8 @@ void intro() {
     cout << "/__.-'|_|--|_|" << endl;
 
     cout << "Hello and welcome to Word Dino!" << endl;
+    cout << "Your goal is to guess a word." << endl;
+    cout << endl;
     cout << "Here are the rules" << endl;
     cout << "If your text turns yellow, your letter is in the word, but it is "
             "not in the right place"
