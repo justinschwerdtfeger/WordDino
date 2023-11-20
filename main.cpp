@@ -46,7 +46,7 @@ void intro() {
 // only 1 so far which is for 5 letter words)
 string getWord(int lengthOfWord) {
     // Open the file
-    string filename = "";
+    string filename = "word-list-5-letter.txt";
     ifstream file(filename);
 
     // Check if the file is opened successfully
@@ -54,17 +54,20 @@ string getWord(int lengthOfWord) {
         cerr << "Error opening file: " << filename << endl;
         return "";
     }
+
     // Count the number of lines in the file
     int numberOfLines = 0;
     string line;
     while (getline(file, line)) {
         numberOfLines++;
     }
+
     // Check if the file is empty
     if (numberOfLines == 0) {
         cerr << "Error: File is empty." << endl;
         return "";
     }
+
     // Generate a random number between 1 and the number of lines
     srand(static_cast<unsigned int>(
         time(nullptr))); // Seed the random number generator
@@ -84,13 +87,19 @@ string getWord(int lengthOfWord) {
             break;
         }
     }
+
     // Close the file
     file.close();
 
-    return targetWord;
-
-    return "";
+    // Check if the selected word has the desired length
+    if (targetWord.length() == lengthOfWord) {
+        return targetWord;
+    } else {
+        cerr << "Error: Selected word does not have the desired length." << endl;
+        return "";
+    }
 }
+
 
 int getNumberOfGuesses() {
     int guesses;
