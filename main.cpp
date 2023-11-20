@@ -95,11 +95,11 @@ string getWord(int lengthOfWord) {
     if (targetWord.length() == lengthOfWord) {
         return targetWord;
     } else {
-        cerr << "Error: Selected word does not have the desired length." << endl;
+        cerr << "Error: Selected word does not have the desired length."
+             << endl;
         return "";
     }
 }
-
 
 int getNumberOfGuesses() {
     int guesses;
