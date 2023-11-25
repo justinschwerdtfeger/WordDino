@@ -146,6 +146,10 @@ int getLengthOfWord() {
     return WordLenght;
 }
 
+// This function should return false if the input is invalid.
+// Return true at the end if all checks pass.
+bool isValidInput(string input, int numberOfLetters) { return true; }
+
 void game(int numberOfGuesses, string word) {
     int remainingGuesses = numberOfGuesses;
 
@@ -154,8 +158,14 @@ void game(int numberOfGuesses, string word) {
 
         cout << "Please enter your guess: ";
         string guess;
-        cin >> guess;
         // need to add the validate word function here
+        while (true) {
+            cin >> guess;
+            if (isValidInput(guess, word.length())) {
+                continue;
+            }
+            break;
+        }
 
         // Check if the guessed word is correct
         if (guess == word) {
