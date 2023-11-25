@@ -45,7 +45,7 @@ void intro() {
 // This should read the lengthOf word and read the corresponding file (there is
 // only 1 so far which is for 5 letter words)
 string getWord(int lengthOfWord) {
-    // Open the file
+
     string filename = "word-list-5-letter.txt";
     ifstream file(filename);
 
@@ -146,8 +146,43 @@ int getLengthOfWord() {
     return WordLenght;
 }
 
-void game(int numberOfGuesses, string word) {
-    //
+
+    void game(int numberOfGuesses, string word) {
+    int remainingGuesses = numberOfGuesses;
+
+    while (remainingGuesses > 0) {
+        cout << "Remaining guesses: " << remainingGuesses << endl;
+
+        cout << "Please enter your guess: ";
+        string guess;
+        cin >> guess;
+    // need to add the validate word function here
+
+        // Check if the guessed word is correct
+        if (guess == word) {
+            cout << "Congratulations! You guessed the word: " << word << endl;
+            break;
+        } else {
+            // Provide feedback on the guessed word
+            for (size_t i = 0; i < word.length(); ++i) {
+                if (guess[i] == word[i]) {
+                    cout << "O"; // Right letter in the right spot
+                } else if (word.find(guess[i]) != string::npos) {
+                    cout << "-"; // Right letter in the wrong spot
+                } else {
+                    cout << "X"; // Wrong letter
+                }
+            }
+
+            cout << endl;
+            remainingGuesses--;
+        }
+    }
+
+    if (remainingGuesses == 0) {
+        cout << "Sorry, you've run out of guesses. The word was: " << word << endl;
+    }
+}
     //     while (true){
     //         cout << "Please enter your guess"
     //         cin >> word
@@ -162,4 +197,4 @@ void game(int numberOfGuesses, string word) {
     //             break
     //     }
     // return word
-}
+
