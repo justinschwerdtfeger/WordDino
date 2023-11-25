@@ -146,8 +146,7 @@ int getLengthOfWord() {
     return WordLenght;
 }
 
-
-    void game(int numberOfGuesses, string word) {
+void game(int numberOfGuesses, string word) {
     int remainingGuesses = numberOfGuesses;
 
     while (remainingGuesses > 0) {
@@ -156,7 +155,7 @@ int getLengthOfWord() {
         cout << "Please enter your guess: ";
         string guess;
         cin >> guess;
-    // need to add the validate word function here
+        // need to add the validate word function here
 
         // Check if the guessed word is correct
         if (guess == word) {
@@ -180,21 +179,21 @@ int getLengthOfWord() {
     }
 
     if (remainingGuesses == 0) {
-        cout << "Sorry, you've run out of guesses. The word was: " << word << endl;
+        cout << "Sorry, you've run out of guesses. The word was: " << word
+             << endl;
     }
 }
-    //     while (true){
-    //         cout << "Please enter your guess"
-    //         cin >> word
-    //         cin.ignore(numeric_limits<streamsize>::max(), '\n');
-    //
-    //             if (cin.fail()){
-    //                 cin.clear();
-    //                 cin.ignore(numeric_limits<streamsize>::max(), '\n');
-    //                 cout << "Incorrect input" << endl;
-    //                 continue;
-    //             }
-    //             break
-    //     }
-    // return word
-
+//     while (true){
+//         cout << "Please enter your guess"
+//         cin >> word
+//         cin.ignore(numeric_limits<streamsize>::max(), '\n');
+//
+//             if (cin.fail()){
+//                 cin.clear();
+//                 cin.ignore(numeric_limits<streamsize>::max(), '\n');
+//                 cout << "Incorrect input" << endl;
+//                 continue;
+//             }
+//             break
+//     }
+// return word
