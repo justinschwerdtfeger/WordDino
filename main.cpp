@@ -10,6 +10,7 @@ void intro();
 string getWord(int lenghtOfWord);
 int getNumberOfGuesses();
 int getLengthOfWord();
+bool isValidInput(string word, int numberOfLetters);
 void game(int numberOfGuesses, string word);
 
 int main() {
