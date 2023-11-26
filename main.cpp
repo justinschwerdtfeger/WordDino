@@ -230,6 +230,7 @@ int main() {
 
     void game(const string &username, const string &answer,
               int numberOfGuesses) {
+
         vector<string> guessedWords;
         vector<string> guessedWordResults;
         int Length = 6;
@@ -241,6 +242,18 @@ int main() {
         int remainingGuesses = numberOfGuesses;
 
         while (remainingGuesses > 0) {
+            clearScreen();
+
+            for (int i = 0; i < guessedWords.size(); i++) {
+                cout << guessedWords[i] << endl;
+                cout << guessedWordResults[i] << endl;
+                cout << endl;
+            }
+
+            for (string row : keyboard) {
+                cout << row << endl;
+            }
+
             cout << "Remaining guesses: " << remainingGuesses << endl;
 
             string guess;
@@ -261,51 +274,36 @@ int main() {
                 break;
             }
 
-            string result = "";
+            string wordResult = "";
             // Provide feedback on the guessed word
             for (int i = 0; i < guess.length(); ++i) {
-
-                bool inWord = false;
+                char charResult;
 
                 if (guess[i] == answer[i]) {
-                    result += 'O'; // Right letter in the right spot
-                    inWord = true;
+                    charResult = 'O'; // Right letter in the right spot
 
                 } else if (answer.find(guess[i]) != string::npos) {
-                    result += '-'; // Right letter in the wrong spot
-                    inWord = true;
+                    charResult = '-'; // Right letter in the wrong spot
 
                 } else {
-                    result += 'X'; // Wrong letter
-                    inWord = false;
+                    charResult = 'X'; // Wrong letter
                 }
+                wordResult += charResult;
 
                 for (int e = 0; e < Length; e++) {
                     if (keyboard[e].find(guess[i]) != string::npos) {
                         int pos = keyboard[e].find(guess[i]);
 
-                        if (inWord) {
-                            keyboard[e + 1][pos] = '-';
-                        } else {
-                            keyboard[e + 1][pos] = 'X';
+                        // Skip letter is already correct.
+                        if (keyboard[e + 1][pos] == 'O') {
+                            continue;
                         }
+                        keyboard[e + 1][pos] = charResult;
                     }
                 }
             }
 
-            guessedWordResults.push_back(result);
-
-            cout << endl;
-
-            for (int i = 0; i < guessedWords.size(); i++) {
-                cout << guessedWords[i] << endl;
-                cout << guessedWordResults[i] << endl;
-                cout << endl;
-            }
-
-            for (string row : keyboard) {
-                cout << row << endl;
-            }
+            guessedWordResults.push_back(wordResult);
 
             remainingGuesses -= 1;
         }
