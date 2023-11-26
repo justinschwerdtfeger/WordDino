@@ -197,13 +197,16 @@ void intro() {
     cout << "Your goal is to guess a word." << endl;
     cout << endl;
     cout << "Here are the rules" << endl;
-    cout << "If your text turns yellow, your letter is in the word, but it "
-            "is "
-            "not in the right place"
+    cout << "If the displayed character is (-) then it "
+            "is not in the right place "
+            "but it is in the word. "
          << endl;
-    cout << "If your text turns green, your letter is in the word and in "
+    cout << "If your guess shows an (O), your letter is in the word and in "
             "the "
-            "right place"
+            "right place."
+         << endl;
+    cout << "If it shows an (X) then it "
+            "is not in the word at all. "
          << endl;
     cout << "Have fun!" << endl;
 }
