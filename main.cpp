@@ -402,6 +402,6 @@ int main() {
     void clearScreen() { system("clear"); }
 #endif
 
-#ifdef WINDOWS
+#ifdef _WIN32
     void clearScreen() { system("cls"); }
 #endif
