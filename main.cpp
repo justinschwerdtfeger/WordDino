@@ -29,14 +29,17 @@ string toLower(const string &input);
  */
 template <typename T> T input(const char *prompt);
 
-struct StreamMaker {
-    ostringstream stream;
+class StreamMaker {
+  public:
     template <typename T> StreamMaker &operator<<(const T &input) {
         stream << input;
         return *this;
     }
     string str() const { return stream.str(); }
     operator string() const { return stream.str(); }
+
+  private:
+    ostringstream stream;
 };
 
 int main() {
