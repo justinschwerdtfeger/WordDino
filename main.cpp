@@ -142,6 +142,13 @@ void printToFile(const string &username, const vector<string> &guessedWords,
                  const vector<string> &guessedWordResults);
 
 /**
+ * @brief Ask user if they would like to play again and return result.
+ *
+ * #return true if user would like to play again, false otherwise
+ */
+bool getPlayAgain();
+
+/**
  * @brief Get a value from the user using cin. Works with generic type T.
  * Handles invalid data.
  *
@@ -176,12 +183,18 @@ bool isAlpha(const string &input);
 void clearScreen();
 
 int main() {
-    intro();
-    int numberOfGuesses = getNumberOfGuesses();
-    int lengthOfWord = getLengthOfWord();
-    string username = getUsername();
-    string answer = getAnswer(lengthOfWord);
-    game(username, answer, numberOfGuesses);
+    bool playAgain;
+    do {
+        intro();
+        int numberOfGuesses = getNumberOfGuesses();
+        int lengthOfWord = getLengthOfWord();
+        string username = getUsername();
+        string answer = getAnswer(lengthOfWord);
+        game(username, answer, numberOfGuesses);
+        playAgain = getPlayAgain();
+
+    } while (playAgain);
+
     return 0;
 }
 
@@ -568,6 +581,30 @@ void printToFile(const string &username, const vector<string> &guessedWords,
 
     cout << "Data saved in " << fileName << endl;
     file.close();
+}
+
+bool getPlayAgain() {
+    // Loops forever
+    while (true) {
+        cout << "Would you like to play again? " << endl;
+        cout << "(Y)es" << endl;
+        cout << "(N)o" << endl;
+
+        // Use input function with char for input validation
+        char userInput = input<char>("Please enter a letter: ");
+
+        // convert user input to lowercase
+        userInput = tolower(userInput);
+
+        switch (userInput) {
+        case 'y':
+            return true;
+        case 'n':
+            return false;
+        default:
+            continue; // Loop again
+        }
+    }
 }
 
 template <typename T> T input(const char *prompt) {
