@@ -1,3 +1,51 @@
+/**
+ * Dylan Maldonado,
+ * Luke Davis,
+ * Justin Schwerdtfeger
+ *
+ * Course: COSC 1436.001 Programming Fundamentals
+ * Group Project
+ * Due Date: 2023-11-26
+ * Instructor: Korinne Caruso
+ *
+ * Purpose: Describe what the program, as a whole, does (e.g.,
+ * calculates a payroll). This need not be long. Just a
+ * couple of sentences will do. Many students
+ * mistakenly describe the purpose of the assignment
+ * here (e.g., to learn how to use functions) rather than
+ * the purpose of the program.
+ *
+ * Input: This section is very important to anyone (including
+ * yourself) who may want to use this program. There are
+ * usually four things that are useful to know about a
+ * programs input:
+ *
+ * 1. What is the input? What information does the
+ * program expect to receive in order to run correctly?
+ *
+ * 2. What is the format of the input? If the input is coming
+ * from a file, the data is probably laid out in specific
+ * columns.
+ *
+ * 3. From where does the program expect to receive the
+ * input? Does the program read from the keyboard
+ * (cin) or a file? If it reads from a file, where and what
+ * is the filename?
+ *
+ * 4. Sometimes there are program restrictions in terms of
+ * the input that you may want to mention. For example,
+ * the maximum number of students that can be read is
+ * 50 or definitions can be no longer than 250
+ * characters.
+ *
+ * Output: This section is similar to the input section, but of
+ * course, describes what is output instead. It should
+ * include information about the contents of the output,
+ * general format (e.g., a table), where the output is sent
+ * (cout or file), the name(s) of any file(s) created, and
+ * any other relevant information.
+ */
+
 #include <cctype>
 #include <cstdlib>
 #include <ctime>
@@ -8,19 +56,94 @@
 #include <vector>
 using namespace std;
 
+/**
+ * @brief Display intro to user
+ */
 void intro();
+
+/**
+ * @brief Get answer using text file. Open text file corresponding to word
+ * length. Pick random word in text file.
+ *
+ * @param lengthOfWord The word length to open the correct text file.
+ *
+ * @return The randomly selected word in the text file
+ */
 string getAnswer(int lenghtOfWord);
+
+/**
+ * @brief Get the number of guesses from the user by printing out a prompt, and
+ * using cin.
+ *
+ * @return The number of guesses from the user
+ */
+
 int getNumberOfGuesses();
+
+/**
+ * @brief Get the length of the words for the game from the user by printing out
+ * a prompt, and using cin.
+ *
+ * @return The length of the guesses and answer from the user
+ */
 int getLengthOfWord();
+
+/**
+ * @brief Get the username for saving data from the user by printing out a
+ * prompt, and using cin. Give user option to not save data.
+ *
+ * @return The username from the user. Return empty string if none was selected
+ */
 string getUsername();
+
+/**
+ * @brief Validate word using the following checks:
+ *  1. The length of word must match numberOfLetters.
+ *  2. The word must contain only alphabetical characters.
+ *  3. The word must not have already been guessed before.
+ *  4. The word must be a part of the word list.
+ *
+ * @param word The word to Validate.
+ *
+ * @param guessedWords The guessed words list to checks.
+ *
+ * @param numberOfLetters The numberofLetters that the word must have.
+ *
+ * @return true if all checks pass, false if any check fails.
+ */
 bool isValidInput(const string &word, const vector<string> &guessedWords,
                   int numberOfLetters);
+
+/**
+ * @brief Run Game. Displays keyboard and info about guesses using 'O' for
+ * correct, '-' for in word, and 'X' for not in word. Clears screen between
+ * valid guesses.
+ *
+ * @param username The username to use for save data
+ *
+ * @param answer The correct answer to be used for the game
+ *
+ * @param numberOfGuesses The number of guesses allowed until word is revealed.
+ */
 void game(const string &username, const string &answer, int numberOfGuesses);
-void printToFile(const string &playerName, const vector<string> &guessedWords,
+
+/**
+ * @brief Print playerdata to file matching players username.
+ *
+ * @param username The username corresponding to the output text file for the
+ * user.
+ *
+ * @param guessedWords The guessed words to be included in the text file
+ *
+ * @param guessedWordResults The Results ('O', '-', or 'X'), for each word to be
+ * included in text file.
+ */
+void printToFile(const string &username, const vector<string> &guessedWords,
                  const vector<string> &guessedWordResults);
 
 /**
- * @brief Get a value from the user using cin
+ * @brief Get a value from the user using cin. Works with generic type T.
+ * Handles invalid data.
  *
  * @param prompt The prompt that the user will see. You may want to add a new
  * line character
@@ -29,10 +152,27 @@ void printToFile(const string &playerName, const vector<string> &guessedWords,
  */
 template <typename T> T input(const char *prompt);
 
+/**
+ * @brief Convert a string to lowercase
+ *
+ * @param input The input to be converted
+ *
+ * @return The input in lowercase form
+ */
 string toLower(const string &input);
 
+/**
+ * @brief Check if a string is alphabetical
+ *
+ * @param input The input to be converted
+ *
+ * @return true if input is alphabetical; false if not
+ */
 bool isAlpha(const string &input);
 
+/**
+ * @brief Clear screen using "cls" on Windows or "clear" on unix
+ */
 void clearScreen();
 
 int main() {
@@ -177,8 +317,11 @@ string getUsername() {
         break;
     }
 
-    string username =
-        input<string>("Please enter the username you would like to use: ");
+    cout << "This program will need a username to create the save file. "
+         << endl;
+
+    string username = input<string>(
+        "Please enter the username you would like to use for saving: ");
     return username;
 }
 // This function should return false if the input is invalid.
