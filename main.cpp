@@ -254,7 +254,7 @@ void game(const string &username, const string &answer, int numberOfGuesses) {
 
         string result = "";
         // Provide feedback on the guessed word
-        for (size_t i = 0; i < guess.length(); ++i) {
+        for (int i = 0; i < guess.length(); ++i) {
 
             bool inWord = false;
 
