@@ -12,8 +12,13 @@ void intro();
 string getAnswer(int lenghtOfWord);
 int getNumberOfGuesses();
 int getLengthOfWord();
-bool isValidInput(string word, int numberOfLetters);
-void game(int numberOfGuesses, string word);
+string getUsername();
+bool isValidInput(const string &word, int numberOfLetters);
+void game(const string &username, const string &answer, int numberOfGuesses);
+void printToFile(const string &playerName, const vector<string> &guessedWords,
+                 const vector<string> &guessedWordResults);
+string toLower(const string &input);
+
 /**
  * @brief Get a value from the user using cin
  *
@@ -28,8 +33,9 @@ int main() {
     intro();
     int numberOfGuesses = getNumberOfGuesses();
     int lengthOfWord = getLengthOfWord();
+    string username = getUsername();
     string answer = getAnswer(lengthOfWord);
-    game(numberOfGuesses, answer);
+    game(username, answer, numberOfGuesses);
     return 0;
 }
 
@@ -143,9 +149,35 @@ int getLengthOfWord() {
     return wordLength;
 }
 
+string getUsername() {
+
+    while (true) {
+        cout << "Would you like to save data? " << endl;
+        cout << "a) Yes" << endl;
+        cout << "b) No" << endl;
+
+        char userInput = input<char>("Please enter a letter: ");
+
+        userInput = tolower(userInput);
+
+        switch (userInput) {
+        case 'a':
+            break;
+        case 'b':
+            return "";
+        default:
+            continue;
+        }
+        break;
+    }
+
+    string username =
+        input<string>("Please enter the username you would like to use: ");
+    return username;
+}
 // This function should return false if the input is invalid.
 // Return true at the end if all checks pass.
-bool isValidInput(string input, int numberOfLetters) {
+bool isValidInput(const string &input, int numberOfLetters) {
     if (input.length() != numberOfLetters) {
         cout << "Input was not the right number of letters" << endl;
         return false;
@@ -154,7 +186,7 @@ bool isValidInput(string input, int numberOfLetters) {
     return true;
 }
 
-void game(int numberOfGuesses, string answer) {
+void game(const string &username, const string &answer, int numberOfGuesses) {
     vector<string> guessedWords;
     vector<string> guessedWordResults;
     int Length = 6;
@@ -237,6 +269,29 @@ void game(int numberOfGuesses, string answer) {
         cout << "Sorry, you've run out of guesses. The word was: " << answer
              << endl;
     }
+
+    printToFile(username, guessedWords, guessedWordResults);
+}
+
+void printToFile(const string &username, const vector<string> &guessedWords,
+                 const vector<string> &guessedWordResults) {
+
+    if (username == "") {
+        return;
+    }
+
+    string fileName = (stringstream() << username << ".txt").str();
+    fstream file(fileName);
+
+    // Check if the file is opened successfully
+    if (!file.is_open()) {
+        cerr << "Error opening file: " << fileName << endl;
+    }
+
+    /* string line; */
+    /* file >> line; */
+    /* cout << line; */
+    file << "initialized";
 }
 
 template <typename T> T input(const char *prompt) {
@@ -257,4 +312,12 @@ template <typename T> T input(const char *prompt) {
         break;
     }
     return input;
+}
+
+string toLower(const string &input) {
+    string output = "";
+    for (char character : input) {
+        output += tolower(character);
+    }
+    return output;
 }
