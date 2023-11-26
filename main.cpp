@@ -229,6 +229,8 @@ void game(int numberOfGuesses, string answer) {
         for (string row : keyboard) {
             cout << row << endl;
         }
+
+        remainingGuesses -= 1;
     }
 
     if (remainingGuesses == 0) {
