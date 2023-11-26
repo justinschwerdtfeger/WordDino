@@ -298,10 +298,11 @@ void printToFile(const string &username, const vector<string> &guessedWords,
     fstream file;
     file.open(fileName, fstream::in | fstream::out | fstream::app);
 
-    // Check if the file is opened successfully
-    if (!file.is_open()) {
+    string contents;
+    if (!(file >> contents)) {
         file.close();
-        file.open(fileName, fstream::in | fstream::out | fstream::app);
+        file.open(fileName, fstream::in | fstream::out | fstream::trunc);
+
         file << "               __" << endl;
         file << "              / _)" << endl;
         file << "     _.----._/ /" << endl;
@@ -312,7 +313,21 @@ void printToFile(const string &username, const vector<string> &guessedWords,
         file << "Word Dino results for " << username << endl;
         file << endl;
     }
-    file << "Woah" << endl;
+
+    file << endl;
+
+    time_t currentTime = time(0);
+
+    file << ctime(&currentTime) << endl;
+
+    for (int i = 0; i < guessedWords.size(); i++) {
+        file << guessedWords[i] << endl;
+        file << guessedWordResults[i] << endl;
+        file << endl;
+    }
+
+    cout << "Data saved in " << fileName << endl;
+    file.close();
 }
 
 template <typename T> T input(const char *prompt) {
