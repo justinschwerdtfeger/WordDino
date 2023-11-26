@@ -5,21 +5,31 @@
 #include <limits>
 #include <sstream>
 #include <string>
+#include <vector>
 using namespace std;
 
 void intro();
-string getWord(int lenghtOfWord);
+string getAnswer(int lenghtOfWord);
 int getNumberOfGuesses();
 int getLengthOfWord();
 bool isValidInput(string word, int numberOfLetters);
 void game(int numberOfGuesses, string word);
+/**
+ * @brief Get a value from the user using cin
+ *
+ * @param prompt The prompt that the user will see. You may want to add a new
+ * line character
+ *
+ * @return The value from the user
+ */
+template <typename T> T input(const char *prompt);
 
 int main() {
     intro();
     int numberOfGuesses = getNumberOfGuesses();
     int lengthOfWord = getLengthOfWord();
-    string word = getWord(lengthOfWord);
-    game(numberOfGuesses, word);
+    string answer = getAnswer(lengthOfWord);
+    game(numberOfGuesses, answer);
     return 0;
 }
 
@@ -46,7 +56,7 @@ void intro() {
 }
 // This should read the lengthOf word and read the corresponding file (there is
 // only 1 so far which is for 5 letter words)
-string getWord(int lengthOfWord) {
+string getAnswer(int lengthOfWord) {
 
     string filename =
         (stringstream() << "word-list-" << lengthOfWord << "-letter.txt").str();
@@ -107,16 +117,8 @@ string getWord(int lengthOfWord) {
 int getNumberOfGuesses() {
     int guesses;
     while (true) {
-        cout << "How many guesses would you like?" << endl;
-        cin >> guesses;
-        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        guesses = input<int>("How many guesses would you like? ");
 
-        if (cin.fail()) {
-            cin.clear();
-            cin.ignore(numeric_limits<streamsize>::max(), '\n');
-            cout << "Invalid input, try again." << endl;
-            continue;
-        }
         if (guesses < 1 || guesses > 100) {
             cout << "Please enter a number 1-100" << endl;
             continue;
@@ -127,33 +129,40 @@ int getNumberOfGuesses() {
 }
 
 int getLengthOfWord() {
-    int WordLenght;
+    int wordLength;
     while (true) {
-        cout << "How long would you like the word to be? (Between 2 and 6)"
-             << endl;
-        cin >> WordLenght;
-        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        wordLength = input<int>("How long would you like the word to be "
+                                "(between 2 and 6 letters)? ");
 
-        if (cin.fail()) {
-            cin.clear();
-            cin.ignore(numeric_limits<streamsize>::max(), '\n');
-            cout << "Invalid input, try again." << endl;
-            continue;
-        }
-        if (WordLenght < 2 || WordLenght > 6) {
+        if (wordLength < 2 || wordLength > 6) {
             cout << "Please enter a number between 2-6" << endl;
             continue;
         }
         break;
     }
-    return WordLenght;
+    return wordLength;
 }
 
 // This function should return false if the input is invalid.
 // Return true at the end if all checks pass.
-bool isValidInput(string input, int numberOfLetters) { return true; }
+bool isValidInput(string input, int numberOfLetters) {
+    if (input.length() != numberOfLetters) {
+        cout << "Input was not the right number of letters" << endl;
+        return false;
+    }
 
-void game(int numberOfGuesses, string word) {
+    return true;
+}
+
+void game(int numberOfGuesses, string answer) {
+    vector<string> guessedWords;
+    vector<string> guessedWordResults;
+    int Length = 6;
+    string keyboard[] = {
+        "q w e r t y u i o p", "                   ", " a s d f g h j k l ",
+        "                   ", "  z x c v b n m    ", "                   ",
+    };
+
     int remainingGuesses = numberOfGuesses;
 
     while (remainingGuesses > 0) {
@@ -161,51 +170,89 @@ void game(int numberOfGuesses, string word) {
 
         string guess;
         while (true) {
-            cout << "Please enter your guess: ";
-            cin >> guess;
-            if (!isValidInput(guess, word.length())) {
+            guess = input<string>("Please enter your guess: ");
+            if (!isValidInput(guess, answer.length())) {
                 continue;
             }
             break;
         }
+        guessedWords.push_back(guess);
 
         // Check if the guessed word is correct
-        if (guess == word) {
-            cout << "Congratulations! You guessed the word: " << word << endl;
+        if (guess == answer) {
+            cout << "Congratulations! You guessed the word: " << answer << endl;
             break;
-        } else {
-            // Provide feedback on the guessed word
-            for (size_t i = 0; i < word.length(); ++i) {
-                if (guess[i] == word[i]) {
-                    cout << "O"; // Right letter in the right spot
-                } else if (word.find(guess[i]) != string::npos) {
-                    cout << "-"; // Right letter in the wrong spot
-                } else {
-                    cout << "X"; // Wrong letter
-                }
+        }
+
+        string result = "";
+        // Provide feedback on the guessed word
+        for (size_t i = 0; i < guess.length(); ++i) {
+
+            bool inWord = false;
+
+            if (guess[i] == answer[i]) {
+                result += 'O'; // Right letter in the right spot
+                inWord = true;
+
+            } else if (answer.find(guess[i]) != string::npos) {
+                result += '-'; // Right letter in the wrong spot
+                inWord = true;
+
+            } else {
+                result += 'X'; // Wrong letter
+                inWord = false;
             }
 
+            for (int e = 0; e < Length; e++) {
+                if (keyboard[e].find(guess[i]) != string::npos) {
+                    int pos = keyboard[e].find(guess[i]);
+
+                    if (inWord) {
+                        keyboard[e + 1][pos] = '-';
+                    } else {
+                        keyboard[e + 1][pos] = 'X';
+                    }
+                }
+            }
+        }
+
+        guessedWordResults.push_back(result);
+
+        cout << endl;
+
+        for (int i = 0; i < guessedWords.size(); i++) {
+            cout << guessedWords[i] << endl;
+            cout << guessedWordResults[i] << endl;
             cout << endl;
-            remainingGuesses--;
+        }
+
+        for (string row : keyboard) {
+            cout << row << endl;
         }
     }
 
     if (remainingGuesses == 0) {
-        cout << "Sorry, you've run out of guesses. The word was: " << word
+        cout << "Sorry, you've run out of guesses. The word was: " << answer
              << endl;
     }
 }
-//     while (true){
-//         cout << "Please enter your guess"
-//         cin >> word
-//         cin.ignore(numeric_limits<streamsize>::max(), '\n');
-//
-//             if (cin.fail()){
-//                 cin.clear();
-//                 cin.ignore(numeric_limits<streamsize>::max(), '\n');
-//                 cout << "Incorrect input" << endl;
-//                 continue;
-//             }
-//             break
-//     }
-// return word
+
+template <typename T> T input(const char *prompt) {
+    T input;
+
+    // Loop while input is invalid
+    while (true) {
+        cout << prompt;
+        cin >> input;
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+
+        if (cin.fail()) {
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cout << "Invalid Input" << endl;
+            continue;
+        }
+        break;
+    }
+    return input;
+}
