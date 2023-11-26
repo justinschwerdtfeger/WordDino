@@ -17,7 +17,6 @@ bool isValidInput(const string &word, int numberOfLetters);
 void game(const string &username, const string &answer, int numberOfGuesses);
 void printToFile(const string &playerName, const vector<string> &guessedWords,
                  const vector<string> &guessedWordResults);
-string toLower(const string &input);
 
 /**
  * @brief Get a value from the user using cin
@@ -29,18 +28,7 @@ string toLower(const string &input);
  */
 template <typename T> T input(const char *prompt);
 
-class StreamMaker {
-  public:
-    template <typename T> StreamMaker &operator<<(const T &input) {
-        stream << input;
-        return *this;
-    }
-    string str() const { return stream.str(); }
-    operator string() const { return stream.str(); }
-
-  private:
-    ostringstream stream;
-};
+string toLower(const string &input);
 
 int main() {
     intro();
@@ -77,8 +65,7 @@ void intro() {
 // only 1 so far which is for 5 letter words)
 string getAnswer(int lengthOfWord) {
 
-    string filename = StreamMaker()
-                      << "word-list-" << lengthOfWord << "-letter.txt";
+    string filename = "word-list-" + to_string(lengthOfWord) + "-letter.txt";
     ifstream file(filename);
 
     // Check if the file is opened successfully
@@ -293,7 +280,7 @@ void printToFile(const string &username, const vector<string> &guessedWords,
         return;
     }
 
-    string fileName = StreamMaker() << username << ".txt";
+    string fileName = username + ".txt";
 
     fstream file;
     file.open(fileName, fstream::in | fstream::out | fstream::app);
