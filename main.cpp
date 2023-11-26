@@ -157,12 +157,11 @@ void game(int numberOfGuesses, string word) {
     while (remainingGuesses > 0) {
         cout << "Remaining guesses: " << remainingGuesses << endl;
 
-        cout << "Please enter your guess: ";
         string guess;
-        // need to add the validate word function here
         while (true) {
+            cout << "Please enter your guess: ";
             cin >> guess;
-            if (isValidInput(guess, word.length())) {
+            if (!isValidInput(guess, word.length())) {
                 continue;
             }
             break;
