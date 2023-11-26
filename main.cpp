@@ -29,6 +29,16 @@ string toLower(const string &input);
  */
 template <typename T> T input(const char *prompt);
 
+struct StreamMaker {
+    std::ostringstream stream;
+    template <typename T> StreamMaker &operator<<(const T &value) {
+        stream << value;
+        return *this;
+    }
+    std::string str() const { return stream.str(); }
+    operator std::string() const { return stream.str(); }
+};
+
 int main() {
     intro();
     int numberOfGuesses = getNumberOfGuesses();
@@ -64,8 +74,8 @@ void intro() {
 // only 1 so far which is for 5 letter words)
 string getAnswer(int lengthOfWord) {
 
-    string filename =
-        (stringstream() << "word-list-" << lengthOfWord << "-letter.txt").str();
+    string filename = StreamMaker()
+                      << "word-list-" << lengthOfWord << "-letter.txt";
     ifstream file(filename);
 
     // Check if the file is opened successfully
@@ -280,18 +290,26 @@ void printToFile(const string &username, const vector<string> &guessedWords,
         return;
     }
 
-    string fileName = (stringstream() << username << ".txt").str();
-    fstream file(fileName);
+    string fileName = StreamMaker() << username << ".txt";
+
+    fstream file;
+    file.open(fileName, fstream::in | fstream::out | fstream::app);
 
     // Check if the file is opened successfully
     if (!file.is_open()) {
-        cerr << "Error opening file: " << fileName << endl;
+        file.close();
+        file.open(fileName, fstream::in | fstream::out | fstream::app);
+        file << "               __" << endl;
+        file << "              / _)" << endl;
+        file << "     _.----._/ /" << endl;
+        file << "    /         /" << endl;
+        file << " __/ (  | (  |" << endl;
+        file << "/__.-'|_|--|_|" << endl;
+        file << endl;
+        file << "Word Dino results for " << username << endl;
+        file << endl;
     }
-
-    /* string line; */
-    /* file >> line; */
-    /* cout << line; */
-    file << "initialized";
+    file << "Woah" << endl;
 }
 
 template <typename T> T input(const char *prompt) {
