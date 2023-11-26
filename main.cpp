@@ -405,12 +405,6 @@ void game(const string &username, const string &answer, int numberOfGuesses) {
         }
         guessedWords.push_back(guess);
 
-        // Check if the guessed word is correct
-        if (guess == answer) {
-            cout << "Congratulations! You guessed the word: " << answer << endl;
-            break;
-        }
-
         string wordResult = "";
         // Provide feedback on the guessed word
         for (int i = 0; i < guess.length(); ++i) {
@@ -442,8 +436,17 @@ void game(const string &username, const string &answer, int numberOfGuesses) {
 
         guessedWordResults.push_back(wordResult);
 
+        // Check if the guessed word is correct
+        if (guess == answer) {
+            cout << "Congratulations! You guessed the word: " << answer << endl;
+            break;
+        }
+
         remainingGuesses -= 1;
     }
+
+    guessedWords.push_back(answer);
+    guessedWordResults.push_back("The correct answer");
 
     if (remainingGuesses == 0) {
         cerr << "Sorry, you've run out of guesses. The word was: " << answer
