@@ -3,9 +3,7 @@
 #include <ctime>
 #include <fstream>
 #include <iostream>
-#include <iterator>
 #include <limits>
-#include <sstream>
 #include <string>
 #include <vector>
 using namespace std;
@@ -158,17 +156,17 @@ string getUsername() {
 
     while (true) {
         cout << "Would you like to save data? " << endl;
-        cout << "a) Yes" << endl;
-        cout << "b) No" << endl;
+        cout << "(Y)es" << endl;
+        cout << "(N)o" << endl;
 
         char userInput = input<char>("Please enter a letter: ");
 
         userInput = tolower(userInput);
 
         switch (userInput) {
-        case 'a':
+        case 'y':
             break;
-        case 'b':
+        case 'n':
             return "";
         default:
             continue;
@@ -210,25 +208,7 @@ bool isValidInput(const string &input, const vector<string> &guessedWords,
         return false;
     }
 
-    // Count the number of lines in the file
-    int numberOfLines = 0;
     string line;
-    while (getline(file, line)) {
-        numberOfLines++;
-    }
-
-    // Check if the file is empty
-    if (numberOfLines == 0) {
-        cerr << "Error: File is empty." << endl;
-        return "";
-    }
-
-    // Reset the file position to the beginning
-    file.clear();
-    file.seekg(0, ios::beg);
-
-    // Read the selected word from the file
-    string targetWord;
     while (getline(file, line)) {
         if (input == line) {
             file.close();
@@ -322,7 +302,7 @@ void game(const string &username, const string &answer, int numberOfGuesses) {
     }
 
     if (remainingGuesses == 0) {
-        cout << "Sorry, you've run out of guesses. The word was: " << answer
+        cerr << "Sorry, you've run out of guesses. The word was: " << answer
              << endl;
     }
 
@@ -385,7 +365,7 @@ template <typename T> T input(const char *prompt) {
         if (cin.fail()) {
             cin.clear();
             cin.ignore(numeric_limits<streamsize>::max(), '\n');
-            cout << "Invalid Input" << endl;
+            cerr << "Invalid Input" << endl;
             continue;
         }
         break;
