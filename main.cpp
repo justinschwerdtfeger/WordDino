@@ -184,8 +184,8 @@ int main() {
     game(username, answer, numberOfGuesses);
     return 0;
 }
+
 void intro() {
-    // TODO: improve these instructions
     cout << "               __" << endl;
     cout << "              / _)" << endl;
     cout << "     _.----._/ /" << endl;
@@ -207,10 +207,11 @@ void intro() {
          << endl;
     cout << "Have fun!" << endl;
 }
-// This should read the lengthOf word and read the corresponding file (there
-// is only 1 so far which is for 5 letter words)
+
 string getAnswer(int lengthOfWord) {
 
+    // Create file name based on length of word so that we open the file
+    // corresponding to the lenght of the word.
     string filename = "word-list-" + to_string(lengthOfWord) + "-letter.txt";
     ifstream file(filename);
 
@@ -236,7 +237,9 @@ string getAnswer(int lengthOfWord) {
     // Generate a random number between 1 and the number of lines
     srand(static_cast<unsigned int>(
         time(nullptr))); // Seed the random number generator
-    int randomLineNumber = rand() % numberOfLines + 1;
+
+    int randomLineNumber =
+        (rand() % numberOfLines) + 1; // Add one becuase there is no line 0
 
     // Reset the file position to the beginning
     file.clear();
@@ -268,13 +271,19 @@ string getAnswer(int lengthOfWord) {
 
 int getNumberOfGuesses() {
     int guesses;
+
+    // Loops forever
     while (true) {
+        // use input function with int for input validation
         guesses = input<int>("How many guesses would you like? ");
 
+        // If input is out of range, repeat
         if (guesses < 1 || guesses > 100) {
             cout << "Please enter a number 1-100" << endl;
             continue;
         }
+
+        // otherise, break out of loop
         break;
     }
     return guesses;
@@ -282,14 +291,20 @@ int getNumberOfGuesses() {
 
 int getLengthOfWord() {
     int wordLength;
+
+    // Loops forever
     while (true) {
+
+        // use input function with int for input validation
         wordLength = input<int>("How long would you like the word to be "
                                 "(between 2 and 6 letters)? ");
 
+        // If input is out of range, repeat
         if (wordLength < 2 || wordLength > 6) {
             cout << "Please enter a number between 2-6" << endl;
             continue;
         }
+        // otherise, break out of loop
         break;
     }
     return wordLength;
@@ -297,24 +312,27 @@ int getLengthOfWord() {
 
 string getUsername() {
 
+    // Loops forever
     while (true) {
         cout << "Would you like to save data? " << endl;
         cout << "(Y)es" << endl;
         cout << "(N)o" << endl;
 
+        // Use input function with char for input validation
         char userInput = input<char>("Please enter a letter: ");
 
+        // convert user input to lowercase
         userInput = tolower(userInput);
 
         switch (userInput) {
         case 'y':
-            break;
+            break; // break out of switch
         case 'n':
-            return "";
+            return ""; // return empty string
         default:
-            continue;
+            continue; // Loop again
         }
-        break;
+        break; // break out of loop to get the username
     }
 
     cout << "This program will need a username to create the save file. "
@@ -322,22 +340,28 @@ string getUsername() {
 
     string username = input<string>(
         "Please enter the username you would like to use for saving: ");
+
     return username;
 }
+
 // This function should return false if the input is invalid.
 // Return true at the end if all checks pass.
 bool isValidInput(const string &input, const vector<string> &guessedWords,
                   int numberOfLetters) {
+
+    // Check to make sure user's input is the right number of letters
     if (input.length() != numberOfLetters) {
         cout << "Input was not the right number of letters. " << endl;
         return false;
     }
 
+    // Check to make sure userinput is alphabetical
     if (!isAlpha(input)) {
         cout << "Your input must use alphabetical characters only. " << endl;
         return false;
     }
 
+    // Check if user has already guessed the word
     for (string word : guessedWords) {
         if (input == word) {
             cout << "You have already guessed that word. " << endl;
@@ -355,59 +379,78 @@ bool isValidInput(const string &input, const vector<string> &guessedWords,
     }
 
     string line;
+
+    // Check through each line in the file
     while (getline(file, line)) {
+
+        // If input matches the line, return true.
         if (input == line) {
             file.close();
             return true;
         }
     }
 
+    // This only happens if no lines in the file returned true
     cerr << "Word not found on list" << endl;
     file.close();
     return false;
 }
 
 void game(const string &username, const string &answer, int numberOfGuesses) {
-
+    // Create starting configurations for vectors and the keyboard array
     vector<string> guessedWords;
     vector<string> guessedWordResults;
-    int Length = 6;
+    int KeyboardRows = 6;
     string keyboard[] = {
         "q w e r t y u i o p", "                   ", " a s d f g h j k l ",
         "                   ", "  z x c v b n m    ", "                   ",
     };
 
-    int remainingGuesses = numberOfGuesses;
+    while (numberOfGuesses > 0) {
 
-    while (remainingGuesses > 0) {
+        // Clear screen at start of each guess
         clearScreen();
 
+        // Print out previously guessed words lists on screen
         for (int i = 0; i < guessedWords.size(); i++) {
             cout << guessedWords[i] << endl;
             cout << guessedWordResults[i] << endl;
             cout << endl;
         }
 
+        // Print out the virtual keyboard
         for (string row : keyboard) {
             cout << row << endl;
         }
 
-        cout << "Remaining guesses: " << remainingGuesses << endl;
+        // Print out the remainig guesses
+        cout << "Remaining guesses: " << numberOfGuesses << endl;
 
+        // Get guess from user
         string guess;
         while (true) {
             guess = input<string>("Please enter your guess: ");
+
+            // Convert guess to lowercase
             guess = toLower(guess);
+
+            // Check all 4 conditions using isValidInput function.
+            // If the checks fail, try again.
             if (!isValidInput(guess, guessedWords, answer.length())) {
                 continue;
             }
+
+            // Otherwise break
             break;
         }
+
+        // Add user's guess to guessed words vector
         guessedWords.push_back(guess);
 
         string wordResult = "";
+
         // Provide feedback on the guessed word
-        for (int i = 0; i < guess.length(); ++i) {
+        for (int i = 0; i < guess.length(); i++) {
             char charResult;
 
             if (guess[i] == answer[i]) {
@@ -421,19 +464,29 @@ void game(const string &username, const string &answer, int numberOfGuesses) {
             }
             wordResult += charResult;
 
-            for (int e = 0; e < Length; e++) {
-                if (keyboard[e].find(guess[i]) != string::npos) {
-                    int pos = keyboard[e].find(guess[i]);
+            // Iterate through each row in keyboard
+            for (int row = 0; row < KeyboardRows; row++) {
 
-                    // Skip letter is already correct.
-                    if (keyboard[e + 1][pos] == 'O') {
-                        continue;
-                    }
-                    keyboard[e + 1][pos] = charResult;
+                // Move to next row if we do not find charcter on this row
+                if (keyboard[row].find(guess[i]) == string::npos) {
+                    continue;
                 }
+
+                // Otherwise pos = the poisition of the guessed letter
+                int pos = keyboard[row].find(guess[i]);
+
+                // Skip letter is already correct.
+                if (keyboard[row + 1][pos] == 'O') {
+                    continue;
+                }
+
+                // Add the result to the row below the letter
+                // Thats why there is row + 1
+                keyboard[row + 1][pos] = charResult;
             }
         }
 
+        // Add result of word ('O', '-', 'X'), to guessedWordResults vector
         guessedWordResults.push_back(wordResult);
 
         // Check if the guessed word is correct
@@ -442,34 +495,46 @@ void game(const string &username, const string &answer, int numberOfGuesses) {
             break;
         }
 
-        remainingGuesses -= 1;
+        // Subtract one attempt
+        numberOfGuesses -= 1;
     }
 
+    // After our attempts are done, put correct answer into vectors for storing
+    // in file
     guessedWords.push_back(answer);
     guessedWordResults.push_back("The correct answer");
 
-    if (remainingGuesses == 0) {
-        cerr << "Sorry, you've run out of guesses. The word was: " << answer
+    if (numberOfGuesses == 0) {
+        cout << "Sorry, you've run out of guesses. The word was: " << answer
              << endl;
     }
 
+    // Run print to file with the necessary data
     printToFile(username, guessedWords, guessedWordResults);
 }
 
 void printToFile(const string &username, const vector<string> &guessedWords,
                  const vector<string> &guessedWordResults) {
 
+    // Don't print if username is an empty string
     if (username == "") {
         return;
     }
 
+    // Create filename based on username
     string fileName = username + ".txt";
 
+    // Create read & write file in append mode, so it writes from the end of the
+    // file
     fstream file;
     file.open(fileName, fstream::in | fstream::out | fstream::app);
 
     string contents;
+
+    // If file is empty, crate initial contents
     if (!(file >> contents)) {
+
+        // close file and reopen file in trunc mode so it can create a new file
         file.close();
         file.open(fileName, fstream::in | fstream::out | fstream::trunc);
 
@@ -486,10 +551,12 @@ void printToFile(const string &username, const vector<string> &guessedWords,
 
     file << endl;
 
-    time_t currentTime = time(0);
+    time_t currentTime = time(nullptr); // get current time
 
+    // Print out current time into file
     file << ctime(&currentTime) << endl;
 
+    // Print out all guessed words and results
     for (int i = 0; i < guessedWords.size(); i++) {
         file << guessedWords[i] << endl;
         file << guessedWordResults[i] << endl;
@@ -521,6 +588,8 @@ template <typename T> T input(const char *prompt) {
 }
 
 string toLower(const string &input) {
+    // For each character in input, convert to lowercase and add to output
+    // string
     string output = "";
     for (char character : input) {
         output += tolower(character);
@@ -529,19 +598,24 @@ string toLower(const string &input) {
 }
 
 bool isAlpha(const string &input) {
-    bool output = true;
+    // Check each character to see if they are alphabetical. If any character is
+    // not, return false. Othewise, return true
     for (char character : input) {
         if (!isalpha(character)) {
-            output = false;
+            return false;
         }
     }
-    return output;
+    return true;
 }
 
+// Check if compiler is uing unix
 #ifdef __unix__
+// use clear for clearing screen
 void clearScreen() { system("clear"); }
 #endif
 
+// Check if compiler is uing windows
 #ifdef _WIN32
+// use cls for clearing screen
 void clearScreen() { system("cls"); }
 #endif
