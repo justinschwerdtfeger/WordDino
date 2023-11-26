@@ -30,13 +30,13 @@ string toLower(const string &input);
 template <typename T> T input(const char *prompt);
 
 struct StreamMaker {
-    std::ostringstream stream;
-    template <typename T> StreamMaker &operator<<(const T &value) {
-        stream << value;
+    ostringstream stream;
+    template <typename T> StreamMaker &operator<<(const T &input) {
+        stream << input;
         return *this;
     }
-    std::string str() const { return stream.str(); }
-    operator std::string() const { return stream.str(); }
+    string str() const { return stream.str(); }
+    operator string() const { return stream.str(); }
 };
 
 int main() {
