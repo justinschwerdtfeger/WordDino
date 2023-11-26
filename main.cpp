@@ -1,7 +1,9 @@
+#include <cctype>
 #include <cstdlib>
 #include <ctime>
 #include <fstream>
 #include <iostream>
+#include <iterator>
 #include <limits>
 #include <sstream>
 #include <string>
@@ -13,7 +15,8 @@ string getAnswer(int lenghtOfWord);
 int getNumberOfGuesses();
 int getLengthOfWord();
 string getUsername();
-bool isValidInput(const string &word, int numberOfLetters);
+bool isValidInput(const string &word, const vector<string> &guessedWords,
+                  int numberOfLetters);
 void game(const string &username, const string &answer, int numberOfGuesses);
 void printToFile(const string &playerName, const vector<string> &guessedWords,
                  const vector<string> &guessedWordResults);
@@ -29,6 +32,8 @@ void printToFile(const string &playerName, const vector<string> &guessedWords,
 template <typename T> T input(const char *prompt);
 
 string toLower(const string &input);
+
+bool isAlpha(const string &input);
 
 int main() {
     intro();
@@ -177,13 +182,63 @@ string getUsername() {
 }
 // This function should return false if the input is invalid.
 // Return true at the end if all checks pass.
-bool isValidInput(const string &input, int numberOfLetters) {
+bool isValidInput(const string &input, const vector<string> &guessedWords,
+                  int numberOfLetters) {
     if (input.length() != numberOfLetters) {
-        cout << "Input was not the right number of letters" << endl;
+        cout << "Input was not the right number of letters. " << endl;
         return false;
     }
 
-    return true;
+    if (!isAlpha(input)) {
+        cout << "Your input must use alphabetical characters only. " << endl;
+        return false;
+    }
+
+    for (string word : guessedWords) {
+        if (input == word) {
+            cout << "You have already guessed that word. " << endl;
+            return false;
+        }
+    }
+
+    string filename = "word-list-" + to_string(numberOfLetters) + "-letter.txt";
+    ifstream file(filename);
+
+    // Check if the file is opened successfully
+    if (!file.is_open()) {
+        cerr << "Error opening file: " << filename << endl;
+        return false;
+    }
+
+    // Count the number of lines in the file
+    int numberOfLines = 0;
+    string line;
+    while (getline(file, line)) {
+        numberOfLines++;
+    }
+
+    // Check if the file is empty
+    if (numberOfLines == 0) {
+        cerr << "Error: File is empty." << endl;
+        return "";
+    }
+
+    // Reset the file position to the beginning
+    file.clear();
+    file.seekg(0, ios::beg);
+
+    // Read the selected word from the file
+    string targetWord;
+    while (getline(file, line)) {
+        if (input == line) {
+            file.close();
+            return true;
+        }
+    }
+
+    cerr << "Word not found on list" << endl;
+    file.close();
+    return false;
 }
 
 void game(const string &username, const string &answer, int numberOfGuesses) {
@@ -203,7 +258,8 @@ void game(const string &username, const string &answer, int numberOfGuesses) {
         string guess;
         while (true) {
             guess = input<string>("Please enter your guess: ");
-            if (!isValidInput(guess, answer.length())) {
+            guess = toLower(guess);
+            if (!isValidInput(guess, guessedWords, answer.length())) {
                 continue;
             }
             break;
@@ -341,6 +397,16 @@ string toLower(const string &input) {
     string output = "";
     for (char character : input) {
         output += tolower(character);
+    }
+    return output;
+}
+
+bool isAlpha(const string &input) {
+    bool output = true;
+    for (char character : input) {
+        if (!isalpha(character)) {
+            output = false;
+        }
     }
     return output;
 }
