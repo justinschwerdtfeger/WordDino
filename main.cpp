@@ -3,6 +3,7 @@
 #include <fstream>
 #include <iostream>
 #include <limits>
+#include <sstream>
 #include <string>
 using namespace std;
 
@@ -47,7 +48,8 @@ void intro() {
 // only 1 so far which is for 5 letter words)
 string getWord(int lengthOfWord) {
 
-    string filename = "word-list-5-letter.txt";
+    string filename =
+        (stringstream() << "word-list-" << lengthOfWord << "-letter.txt").str();
     ifstream file(filename);
 
     // Check if the file is opened successfully
