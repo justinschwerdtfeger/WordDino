@@ -26,39 +26,26 @@
  * word has to be the correct amount of letters, in the right order, and a part
  * of the list that we have in the game already.
  *
+ * 2. once the user has selected they're settings(ints) it looks through
+ * the respective file. The file has one string per row. It then keeps
+ * that string as the answer to compare to the user guess
  *
- *
- * 2. What is the format of the input? If the input is coming
- * from a file, the data is probably laid out in specific
- * columns.
- *  The cin input it looks for a string, integer or character and
- *  the file has one string per row.
- *
- * 3. From where does the program expect to receive the
- * input? Does the program read from the keyboard
- * (cin) or a file? If it reads from a file, where and what
- * is the filename?
- *  The program receives most of the input from the keyboard and also compares
+ * 3. The program receives most of the input from the keyboard and also compares
  *  the input with the lists stored in the program. We give the user the option
  *  to choose between two and six letters for the files.
  *
- * 4. Sometimes there are program restrictions in terms of
- * the input that you may want to mention. For example,
- * the maximum number of students that can be read is
- * 50 or definitions can be no longer than 250
- * characters.
- *  The restrictions we have for input is that it has to be something we ask
+ *
+ * 4.  The restrictions we have for input is that it has to be something we ask
  * for. So if there is a yes/no question it has to be answered correctly
  * otherwise it lets the user know they entered invalid data. Same applies to
  * the words that are guessed, the words are compared to our list and states if
- * its valid or not.
+ * its valid or not. the other limitations are that the words are list based,
+ * the user can only use 2-6 letter words.
  *
- * Output: This section is similar to the input section, but of
- * course, describes what is output instead. It should
- * include information about the contents of the output,
- * general format (e.g., a table), where the output is sent
- * (cout or file), the name(s) of any file(s) created, and
- * any other relevant information.
+ *
+ * Output: The output is a combination we output the correct answer and the
+ * guess keys to the screen and once the game was complete the program then outputs
+ * hat users file that was open previously in the code.
  */
 
 #include <cctype>
