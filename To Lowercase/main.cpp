@@ -13,7 +13,6 @@ string toLower(const string &input) {
 int main() {
     ifstream inFile;
     ofstream outFile;
-    vector<string> words;
     string contents;
 
     inFile.open("word-list-6-letter.txt");
@@ -21,8 +20,7 @@ int main() {
 
     while (inFile >> contents) {
         contents = toLower(contents);
-        words.push_back(contents);
-        cout << contents << endl;
+        outFile << contents << endl;
     }
 
     inFile.close();
