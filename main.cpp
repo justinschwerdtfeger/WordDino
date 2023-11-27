@@ -23,30 +23,34 @@
  * 1. What is the input? What information does the
  * program expect to receive in order to run correctly?
  *  We formatted the input to take exactly what were needing. If the question
-    asks for a number, it only takes a number, if it asks for a word, the
-    word has to be the correct amount of letters, in the right order, and a part of the
-    list that we have in the game already.
+ *  asks for a number, it only takes a number, if it asks for a word, the
+ *  word has to be the correct amount of letters, in the right order, and a part
+ *  of the list that we have in the game already.
+ *
  * 2. What is the format of the input? If the input is coming
  * from a file, the data is probably laid out in specific
  * columns.
  *  The cin input it looks for a string, integer or character and
-    the file has one string per row.
+ *  the file has one string per row.
+ *
  * 3. From where does the program expect to receive the
  * input? Does the program read from the keyboard
  * (cin) or a file? If it reads from a file, where and what
  * is the filename?
- * The program receives most of the input from the keyboard and also compares
-   the input with the lists stored in the program. We give the user the option
-   to choose between two and six letters for the files.
+ *  The program receives most of the input from the keyboard and also compares
+ *  the input with the lists stored in the program. We give the user the option
+ *  to choose between two and six letters for the files.
+ *
  * 4. Sometimes there are program restrictions in terms of
  * the input that you may want to mention. For example,
- * the maximum number of students that can be read is
- * 50 or definitions can be no longer than 250
- * characters.
-   The restrictions we have for input is that it has to be something we ask for.
-   So if there is a yes/no question it has to be answered correctly otherwise
-   it lets the user know they entered invalid data. Same applies to the words
-   that are guessed, the words are compared to our list and states if its valid or not.
+ * the maximum number of students that can be read is
+ * 50 or definitions can be no longer than 250
+ * characters.
+ *  The restrictions we have for input is that it has to be something we ask
+ * for. So if there is a yes/no question it has to be answered correctly
+ * otherwise it lets the user know they entered invalid data. Same applies to
+ * the words that are guessed, the words are compared to our list and states if
+ * its valid or not.
  *
  * Output: This section is similar to the input section, but of
  * course, describes what is output instead. It should
