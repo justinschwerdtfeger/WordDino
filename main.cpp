@@ -8,24 +8,25 @@
  * Due Date: 2023-11-26
  * Instructor: Korinne Caruso
  *
- * Purpose: Describe what the program, as a whole, does (e.g.,
- * calculates a payroll). This need not be long. Just a
- * couple of sentences will do. Many students
- * mistakenly describe the purpose of the assignment
- * here (e.g., to learn how to use functions) rather than
- * the purpose of the program.
+ * Purpose: This program is a Wordle clone and is
+ * a word game that is completely customizable from
+ * the amount of guesses you want and how long you want
+ * the word to be as well. This game is used to expand
+ * and practice the users diversity in words.
  *
- * Input: This section is very important to anyone (including
- * yourself) who may want to use this program. There are
- * usually four things that are useful to know about a
- * programs input:
+ * Input: This program uses many different types of
+ * inputs through-out. Most of the inputs are via keyboard
+ * but we also have an input field that will then create and open
+ * a file with data field information. -not finshed
  *
- * 1. What is the input? What information does the
- * program expect to receive in order to run correctly?
- *  We formatted the input to take exactly what were needing. If the question
- *  asks for a number, it only takes a number, if it asks for a word, the
- *  word has to be the correct amount of letters, in the right order, and a part
- *  of the list that we have in the game already.
+ * 1. the inputs through-out the program use a various types
+ * of input. it expects to receive characters, numbers and strings.
+ * We formatted the input to take exactly what were needing. If the question
+ * asks for a number, it only takes a number, if it asks for a word, the
+ * word has to be the correct amount of letters, in the right order, and a part
+ * of the list that we have in the game already.
+ *
+ *
  *
  * 2. What is the format of the input? If the input is coming
  * from a file, the data is probably laid out in specific
